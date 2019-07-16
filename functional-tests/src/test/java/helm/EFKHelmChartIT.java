@@ -383,7 +383,16 @@ public class EFKHelmChartIT
                         "%22%20AND%20" +
                         "host" + "%3A%22" + sHostPrefix + "%22");
 
-        Map<String, ?> map = HelmUtils.JSON_MAPPER.readValue(queueLogs.stream().collect(Collectors.joining()), Map.class);
+        Map<String, ?> map = null;
+        try
+            {
+            map = HelmUtils.JSON_MAPPER.readValue(queueLogs.stream().collect(Collectors.joining()), Map.class);
+            }
+        catch(Exception ex)
+            {
+            System.err.println("Cannot parse EFK data: " + ex);
+            return List.of();
+            }
 
         Map<String, List<Map<String, ?>>> mapHits = (Map<String, List<Map<String, ?>>>) map.get("hits");
         assertThat(mapHits, notNullValue());
@@ -413,7 +422,16 @@ public class EFKHelmChartIT
                 "/coherence-cluster-*/_search?size=9999&q=host%3A%22" +
                 sHost + "%22sort=@timestamp");
 
-        Map<String, ?> map = HelmUtils.JSON_MAPPER.readValue(queueLogs.stream().collect(Collectors.joining()), Map.class);
+        Map<String, ?> map = null;
+        try
+            {
+            map = HelmUtils.JSON_MAPPER.readValue(queueLogs.stream().collect(Collectors.joining()), Map.class);
+            }
+        catch(Exception ex)
+            {
+            System.err.println("Cannot parse per host log messages: " + ex);
+            return List.of();
+            }
 
         Map<String, List<Map<String, ?>>> mapHits = (Map<String, List<Map<String, ?>>>) map.get("hits");
         assertThat(mapHits, notNullValue());
@@ -469,7 +487,16 @@ public class EFKHelmChartIT
                     "%22%20AND%20" +
                     "member" + "%3A%22" + sHostPrefix + "%22");
 
-        Map<String, ?> map = HelmUtils.JSON_MAPPER.readValue(queueLogs.stream().collect(Collectors.joining()), Map.class);
+        Map<String, ?> map = null;
+        try
+            {
+            map = HelmUtils.JSON_MAPPER.readValue(queueLogs.stream().collect(Collectors.joining()), Map.class);
+            }
+        catch(Exception ex)
+            {
+            System.err.println("Cannot parse EFK application data: " + ex);
+            return List.of();
+            }
 
         Map<String, List<Map<String, ?>>> mapHits = (Map<String, List<Map<String, ?>>>) map.get("hits");
         assertThat(mapHits, notNullValue());
