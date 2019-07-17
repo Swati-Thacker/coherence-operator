@@ -1036,6 +1036,10 @@ public abstract class BaseHelmChartTest
                     }
                 }
             }
+        else
+            {
+            System.err.println("XXX getJson non-zero exit code: " + nExitCode);
+            }
 
         return null;
         }
