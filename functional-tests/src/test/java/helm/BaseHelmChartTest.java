@@ -1365,7 +1365,7 @@ public abstract class BaseHelmChartTest
 
         arguments = arguments.with("logs", sPod);
 
-        int nExitCode = cluster.kubectlAndWait(arguments, Console.of(console), LaunchLogging.disabled());
+        int nExitCode = cluster.kubectlAndWait(arguments, Console.of(console), LaunchLogging.enabled());
 
         if (nExitCode != 0)
             {
